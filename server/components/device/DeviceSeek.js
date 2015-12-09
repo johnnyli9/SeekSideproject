@@ -71,6 +71,10 @@ module.exports = NoGapDef.component({
         var exec;
         var mraa,
             serialport;
+        var analogPin0,
+            analogValue,
+            digitalPin0,
+            digitalValue;
 
         var led13,
             ledStatus = 0;
@@ -87,14 +91,33 @@ module.exports = NoGapDef.component({
 
             startSeeking: function(device) {
                 console.log('Start seeking...');
+                analogPin0 = new mraa.Aio(2); //setup access analog inpuput pin 0
+                analogValue = analogPin0.read(); //read the value of the analog pin
+                // led13 = new mraa.Gpio(13);
+                // led13.dir(mraa.DIR_OUT);
+                digitalPin0 = new mraa.Gpio(13);
+                digitalPin0.dir(mraa.DIR_IN);
+                digitalValue = digitalPin0.read();
 
-                led13 = new mraa.Gpio(13);
-                led13.dir(mraa.DIR_OUT);
-                
-                this.blinkLed();
+                // this.blinkLed();
+                this.detectRotary();
 
                 // var a = this.Instance.DeviceMain.getCurrentDevice().hostName;
                 // console.log(a);
+            },
+
+            detectRotary: function(){
+                analogValue = analogPin0.read();
+                digitalValue = digitalPin0.read();
+                // console.log(analogValue); //write the value of the analog pin to the console
+                console.log("button:"+digitalValue);
+                // if(analogValue<thresholdvalue){
+                //     myLed.write(1);
+                // }
+                // else{
+                //     myLed.write(0);
+                // }
+                this.re = setTimeout(this.detectRotary.bind(this),200);
             },
 
             setLedStatus: function(status) {
