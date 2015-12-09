@@ -1,0 +1,16 @@
+# ignore log files
+_log/*
+*.log
+
+# ignore some auto-generated files
+data/*
+
+# ignore user config
+appConfig.user.js
+
+# ignore uploaded files
+uploads/*
+pub/uploads/*
+
+#Ignore Swap Files
+*.sw*
