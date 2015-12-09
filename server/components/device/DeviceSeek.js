@@ -88,13 +88,13 @@ module.exports = NoGapDef.component({
             startSeeking: function(device) {
                 console.log('Start seeking...');
 
-                // led13 = new mraa.Gpio(13);
-                // led13.dir(mraa.DIR_OUT);
+                led13 = new mraa.Gpio(13);
+                led13.dir(mraa.DIR_OUT);
                 
-                // this.blinkLed();
+                this.blinkLed();
 
-                var a = this.Instance.DeviceMain.getCurrentDevice().hostName;
-                console.log(a);
+                // var a = this.Instance.DeviceMain.getCurrentDevice().hostName;
+                // console.log(a);
             },
 
             setLedStatus: function(status) {
