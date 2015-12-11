@@ -56,6 +56,11 @@ module.exports = NoGapDef.component({
                     .then(function() {
                         return this.nBlinks;
                     });
+                },
+
+                // for test
+                printff: function() {
+                    this.client.printffclient();
                 }
             },
         };
@@ -75,6 +80,11 @@ module.exports = NoGapDef.component({
         var led13,
             ledStatus = 0;
 
+        var analogPin2; 
+        var analogValue;
+        var button;
+        var buttonValue; 
+
         var blinkInterval = 1000;
 
         return {
@@ -88,13 +98,40 @@ module.exports = NoGapDef.component({
             startSeeking: function(device) {
                 console.log('Start seeking...');
 
+                analogPin2 = new mraa.Aio(2); //setup access analog inpuput pin 0
+                analogValue = analogPin2.read(); //read the value of the analog pin
+                button = new mraa.Gpio(13);
+                button.dir(mraa.DIR_IN);
+                
+                // this.detectRotary();
+
                 // led13 = new mraa.Gpio(13);
                 // led13.dir(mraa.DIR_OUT);
                 
                 // this.blinkLed();
 
-                var a = this.Instance.DeviceMain.getCurrentDevice().hostName;
-                console.log(a);
+                // var a = this.Instance.DeviceMain.getCurrentDevice().hostName;
+                // console.log(a);
+            },
+
+            detectRotary: function() {
+                analogValue = analogPin2.read();
+                buttonValue = button.read();
+                
+                console.log("rotary:"+ analogValue); //write the value of the analog pin to the console
+                console.log("button:"+ buttonValue);
+
+                if(buttonValue){
+                    this.submitButton(analogValue,buttonValue);
+                }
+                else{
+                    this.redetectRotary = setTimeout(this.detectRotary.bind(this), 100);
+                }
+            },
+
+            submitButton: function(analogValue, buttonValue) {
+                console.log("rotary value:" + analogValue);
+                console.log("button value:"+ buttonValue);
             },
 
             setLedStatus: function(status) {
@@ -124,7 +161,10 @@ module.exports = NoGapDef.component({
              * Client commands can be directly called by the host
              */
             Public: {
-                
+                // for test
+                printffclient: function() {
+                    console.log("DeviceSeek.client.public.printff is called.");
+                }
             }
         };
     })

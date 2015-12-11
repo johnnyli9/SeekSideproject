@@ -32,6 +32,17 @@ module.exports = NoGapDef.component({
              * Host commands can be directly called by the client
              */
             Public: {
+                // for test function
+                printff: function(deviceId) {
+                    console.log("test is work!!!!!!!!");
+                    if (!this.Instance.User.isStaff()) 
+                        return Promise.reject(makeError('error.invalid.permissions'));
+
+                    return Shared.DeviceStatus.runForDevice(deviceId, function(Instance) {
+                        console.log("testtest");
+                        return Instance.DeviceSeek.client.printffclient();
+                    });
+                }
                 
             },
         };
@@ -58,6 +69,11 @@ module.exports = NoGapDef.component({
                     UIMgr.registerPageScope(ThisComponent, $scope);
                     
                     // customize your HomePage's $scope here:
+                    // for test function
+                    $scope.test = function() {
+                        ThisComponent.host.printff("3");
+                    };
+
                 });
 
                 // register page
