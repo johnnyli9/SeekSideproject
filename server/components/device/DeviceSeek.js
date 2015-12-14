@@ -84,6 +84,8 @@ module.exports = NoGapDef.component({
         var analogValue;
         var button;
         var buttonValue; 
+        var localQuestionNumbers;
+        var questionCount;
 
         var blinkInterval = 1000;
 
@@ -115,23 +117,42 @@ module.exports = NoGapDef.component({
             },
 
             detectRotary: function() {
-                analogValue = analogPin2.read();
-                buttonValue = button.read();
-                
-                console.log("rotary:"+ analogValue); //write the value of the analog pin to the console
-                console.log("button:"+ buttonValue);
+                if(questionCount < localQuestionNumbers){
+                    analogValue = analogPin2.read();
+                    buttonValue = button.read();
+                    
+                    console.log("rotary:"+ analogValue); //write the value of the analog pin to the console
+                    console.log("button:"+ buttonValue);
 
-                if(buttonValue){
-                    this.submitButton(analogValue,buttonValue);
+                    if(buttonValue){
+                        this.submitButton(analogValue,buttonValue);
+                    }
+                    else{
+                        this.redetectRotary = setTimeout(this.detectRotary.bind(this), 100);
+                    }
                 }
                 else{
-                    this.redetectRotary = setTimeout(this.detectRotary.bind(this), 100);
+                    // 傳所有問題的結果
                 }
             },
 
             submitButton: function(analogValue, buttonValue) {
                 console.log("rotary value:" + analogValue);
                 console.log("button value:"+ buttonValue);
+                // questionCount++;
+                // 存回應
+                var obj = {};
+                obj.deviceId = 3;
+                obj.activityId = 1;
+                obj.questionNumber = ++question;
+                obj.answer = analogValue;
+
+                var promise;
+
+
+                promise = Instance.DeviceResponse.responses.createObject(obj); 
+                // this.detectRotary();
+
             },
 
             setLedStatus: function(status) {
@@ -164,6 +185,12 @@ module.exports = NoGapDef.component({
                 // for test
                 printffclient: function() {
                     console.log("DeviceSeek.client.public.printff is called.");
+                },
+
+                // send question numbers to device 
+                QuestionNumbers: function(questionNumbers) {
+                    localQuestionNumbers = questionNumbers;
+                    questionCount = 0;
                 }
             }
         };
