@@ -67,12 +67,16 @@ module.exports = {
     /**
      * Host name or IP that external clients can connect to
      */
+
     // 'externalHost': '192.168.0.102',
 
     // 'hosts': ['192.168.0.102'],
-    'externalHost': '172.20.10.9',
+    
 
+    'externalHost': '172.20.10.9',
     'hosts': ['172.20.10.9'],
+
+
 
     // ########################################################################################################################
     // Other misc settings
@@ -160,8 +164,8 @@ module.exports = {
     // these are the login details to connect to your MySQL DB
     'db' : {
         'host'     : 'localhost',
-        'user'     : 'johnnylee',
-        'password' : '1109',
+        'user'     : 'root',
+        'password' : '',
         'port'     : '3306',
         'database' : 'seeksideDB',
         'reconnectDelay':   '5'
@@ -222,9 +226,16 @@ module.exports = {
             'models/core/AppConfig',
             'models/core/User',
 
+            'models/question/Activity',
+            'models/question/ActivityQuestion',
+
+            'models/group/Match',
+
             // all kinds of model components
             'models/devices/Device',
             'models/devices/DeviceStatus',
+            'models/devices/DeviceResponse',
+            'models/devices/DeviceResult',
 
             // misc utilities
             'util/Auth',
@@ -253,6 +264,7 @@ module.exports = {
             'ui/home/HomePage',
             'ui/device/DevicePage',
             'ui/account/AccountPage',
+            'ui/question/QuestionPage',
 
             // superuser pages:
             'ui/admin/AdminPage'

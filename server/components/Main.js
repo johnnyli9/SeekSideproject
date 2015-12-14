@@ -61,10 +61,16 @@ module.exports = NoGapDef.component({
                     'AppConfig', 
                     'User',
 
+                    'Activity',
+                    'ActivityQuestion',
+
+                    'Match',
+
                     // model components
                     'Device',
                     'DeviceStatus',
-
+                    'DeviceResponse',
+                    'DeviceResult',
 
                     // utilities
                     'CacheUtil',

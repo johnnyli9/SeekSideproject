@@ -1,0 +1,95 @@
+<div>
+
+	<label style="font-size:30px; position:relative; top:10px; ">&nbsp;Edit "{{activityTitle}}" </label>
+	<hr></hr>
+	<div style="margin:10px;">
+		
+		<!-- Activity Title -->
+		<label style="font-size:20px;">Title</label>
+		<input type="text" ng-model="activityTitle" class="form-control" placeholder="title input"></input>
+		<br/>
+		
+		<!-- Activity Description -->
+		<label style="font-size:20px;">Description</label>
+		<textarea ng-model="activityDescription" class="form-control" rows="3" placeholder="description input"></textarea>
+		</br></br>
+
+
+	    <!-- Question -->
+		<label style="font-size:20px;">Question</label>
+		<!-- add button -->
+		<button type="button" class="btn btn-info btn-xm" ng-click="addQuestion()" style="bottom: 3px; position: relative;">
+            <span class="glyphicon glyphicon-plus fa-lg" aria-hidden="true"/>
+        </button>
+        <!-- sub button -->
+        <button type="button" class="btn btn-info btn-xm" ng-click="subQuestion()" style="bottom: 3px; position: relative;">
+            <span class="glyphicon glyphicon-minus fa-lg" aria-hidden="true"/>
+        </button>
+		<br>&nbsp;<br/>
+
+		<!-- question 1 -->
+		<div class="bg-info">
+			<div style="margin:10px">
+				<label style="font-size:20px;">question 1</label>
+				<textarea ng-model="QuestionTitleArray[0]" class="form-control" rows="3" placeholder="question description input"></textarea>
+				<br/>
+			</div>
+		</div>
+		<br/>
+		
+		<!-- question 2 -->
+		<div ng-show='showEditQuestion[1]' class="bg-info">
+			<div style="margin:10px">
+				<label style="font-size:20px;">question 2</label>
+				<textarea ng-model="QuestionTitleArray[1]" class="form-control" rows="3" placeholder="question description input"></textarea>
+				<br/>
+			</div>
+		</div>
+		<br/>
+
+		<!-- question 3 -->
+		<div ng-show='showEditQuestion[2]' class="bg-info">
+			<div style="margin:10px">
+				<label style="font-size:20px;">question 3</label>
+				<textarea ng-model="QuestionTitleArray[2]" class="form-control" rows="3" placeholder="question description input"></textarea>
+				<br/>
+			</div>
+		</div>
+		<br/>
+
+		<!-- question 4 -->
+		<div ng-show='showEditQuestion[3]' class="bg-info">
+			<div style="margin:10px">
+				<label style="font-size:20px;">question 4</label>
+				<textarea ng-model="QuestionTitleArray[3]" class="form-control" rows="3" placeholder="question description input"></textarea>
+				<br/>
+			</div>
+		</div>
+		<br/>
+
+		<!-- question 5 -->
+		<div ng-show='showEditQuestion[4]' class="bg-info">
+			<div style="margin:10px">
+				<label style="font-size:20px;">question 5</label>
+				<textarea ng-model="QuestionTitleArray[4]" class="form-control" rows="3" placeholder="question description input"></textarea>
+				<br/>
+			</div>
+		</div>
+		<br/>
+
+		<!-- 123 -->
+
+	    <div>
+	    	<a style="visibility:hidden;" class="btn btn-default col-xs-9" ng-click="">
+            <span></span></a>
+			<button type="button" ng-click="submitActivity()" class="btn btn-success" style="width:12%;">OK</button>
+			<button type="button" ng-click="cancel()" class="btn btn-warning" style="width:12%;">Cancel</button>
+		</div>
+
+
+
+
+	</div>
+
+</div>
+
