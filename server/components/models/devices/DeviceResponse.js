@@ -110,6 +110,20 @@ module.exports = NoGapDef.component({
             },
 
             initHost: function() {
+            },
+
+            Private: {
+                test1: function(obj) {
+                    this.responses.createObject(obj);
+
+                }
+            },
+
+            Public: {
+                test: function(obj) {
+                    this.test1(obj);
+
+                }
             }
         };
     }),
@@ -120,6 +134,9 @@ module.exports = NoGapDef.component({
             },
 
             Public: {
+                receiveAnswer: function(obj) {
+                    this.host.test(obj);
+                }
             }
         };
     })

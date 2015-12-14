@@ -60,7 +60,7 @@ module.exports = NoGapDef.component({
 
                 // for test
                 printff: function() {
-                    this.client.printffclient();
+                    this.client.initQuestionNumbers();
                 }
             },
         };
@@ -89,6 +89,7 @@ module.exports = NoGapDef.component({
 
         var blinkInterval = 1000;
 
+        
         return {
             __ctor: function() {
                 ThisComponent = this;
@@ -144,13 +145,11 @@ module.exports = NoGapDef.component({
                 var obj = {};
                 obj.deviceId = 3;
                 obj.activityId = 1;
-                obj.questionNumber = ++question;
+                obj.questionNumber = ++questionCount;
                 obj.answer = analogValue;
 
-                var promise;
+                Instance.DeviceResponse.responses.recieveAnswer(obj);
 
-
-                promise = Instance.DeviceResponse.responses.createObject(obj); 
                 // this.detectRotary();
 
             },
@@ -178,6 +177,7 @@ module.exports = NoGapDef.component({
                 }
             },
 
+
             /**
              * Client commands can be directly called by the host
              */
@@ -188,9 +188,10 @@ module.exports = NoGapDef.component({
                 },
 
                 // send question numbers to device 
-                QuestionNumbers: function(questionNumbers) {
+                initQuestionNumbers: function(questionNumbers) {
                     localQuestionNumbers = questionNumbers;
                     questionCount = 0;
+                    this.detectRotary();
                 }
             }
         };

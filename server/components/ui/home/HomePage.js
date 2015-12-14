@@ -33,14 +33,15 @@ module.exports = NoGapDef.component({
              */
             Public: {
                 // for test function
-                printff: function(deviceId) {
+                printff: function(deviceId, questionNumbers) {
                     console.log("test is work!!!!!!!!");
                     if (!this.Instance.User.isStaff()) 
                         return Promise.reject(makeError('error.invalid.permissions'));
 
                     return Shared.DeviceStatus.runForDevice(deviceId, function(Instance) {
                         console.log("testtest");
-                        return Instance.DeviceSeek.client.printffclient();
+                        return Instance.DeviceSeek.client.initQuestionNumbers(questionNumbers);
+                        // return Instance.DeviceSeek.client.printffclient();
                     });
                 }
                 
@@ -71,7 +72,7 @@ module.exports = NoGapDef.component({
                     // customize your HomePage's $scope here:
                     // for test function
                     $scope.test = function() {
-                        ThisComponent.host.printff("3");
+                        ThisComponent.host.printff("3","3");
                     };
 
                 });
