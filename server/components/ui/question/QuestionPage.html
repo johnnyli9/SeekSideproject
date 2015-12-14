@@ -1,0 +1,56 @@
+<div class="fill container-page" ng-controller="questionCtrl">
+	
+	<!-- activities -->
+    </br></br>
+    <div class="panel panel-primary panel">
+        <div class="panel-heading">
+            <div class="panel-title">
+                Video Gallery
+                <!-- create activity -->
+                <button type="button" class="btn btn-default btn-xm" ng-click="createActivity()" style="float:right; bottom: 5px; position: relative;">
+                    <span class="glyphicon glyphicon-plus fa-lg" aria-hidden="true"/>
+                </button>
+            </div>
+        </div>
+
+        <div class="panel-body" >
+            
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr class= "info">
+                            <th class="col-md-1">#</th>
+                            <th class="col-md-8">Activity</th>
+                            <th class="col-md-3" ></th>
+                        </tr>
+                    <tbody  ng-repeat="activity in activitiesInfo.slice().reverse()">
+                        <tr>
+                            <td>{{activitiesInfo.length - $index}}</td>
+                            <td>{{activity.titleText}}</td>
+                            <td>
+      
+                                <!-- delete -->
+                                <button ng-show="1" type="button" class="btn btn-default btn-xm" ng-click="deleteActivity(activity.activityId)"style="float:right; margin:1px;">
+                                    <span class="fa fa-trash-o fa-lg" aria-hidden="true"/>
+                                </button>
+                                <!-- edit -->
+                                <button type="button" class="btn btn-default btn-xm" ng-click="editActivity(activity, activity.activityId)"style="float:right; margin:1px;">
+                                    <span class="glyphicon glyphicon-pencil fa-lg" aria-hidden="true"/>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr ng-show="hiddenActivity[activity.activityId]">
+                            <td class='warning'>
+                            </td>
+                            <td class='warning' COLSPAN=5 >
+                                {{activity.descriptionText}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>            
+            </div>
+        </div>
+    </div> 
+
+
+</div>
