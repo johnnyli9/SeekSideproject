@@ -103,7 +103,7 @@ module.exports = NoGapDef.component({
                 button = new mraa.Gpio(13);
                 button.dir(mraa.DIR_IN);
                 
-                // this.detectRotary();
+                //this.detectRotary();
 
                 // led13 = new mraa.Gpio(13);
                 // led13.dir(mraa.DIR_OUT);
