@@ -84,8 +84,13 @@ module.exports = NoGapDef.component({
         var analogValue;
         var button;
         var buttonValue; 
+        var soundPin6;
+        var soundValue;
         var localQuestionNumbers;
+        var localActivityId;
+        // var localResult = {};
         var questionCount;
+
 
         var blinkInterval = 1000;
 
@@ -99,13 +104,22 @@ module.exports = NoGapDef.component({
             },
 
             startSeeking: function(device) {
-                console.log('Start seeking...');
+                console.log('Start SeekSide initial...');
 
-                analogPin2 = new mraa.Aio(2); //setup access analog inpuput pin 0
+                // rotary initial
+                analogPin2 = new mraa.Aio(2); //setup access analog inpuput pin 2
                 analogValue = analogPin2.read(); //read the value of the analog pin
+                
+                // button initial
                 button = new mraa.Gpio(13);
                 button.dir(mraa.DIR_IN);
                 
+                // buzzer initial
+                soundPin6 = new mraa.Gpio(3); //setup access digital input pin 6 (Pwm)
+                soundPin6.dir(mraa.DIR_OUT);
+                
+                console.log("Waiting for Host send question numbers....");
+                // this.playSound();
                 //this.detectRotary();
 
                 // led13 = new mraa.Gpio(13);
@@ -134,6 +148,18 @@ module.exports = NoGapDef.component({
                 }
                 else{
                     // 傳所有問題的結果
+                    var obj = {};
+                    obj.deviceId = this.Instance.DeviceMain.getCurrentDevice().deviceId;
+                    obj.activityId = localActivityId;
+                    obj.result = ;
+                    obj.isGroup = ;
+                    obj.groupId = ;
+                    // send DeviceResponse to server then save to DB
+                    console.log("saving DeviceResult....");
+                    Instance.DeviceResponse.receiveDeviceResult(obj);
+
+                    // enter to find match state
+
                 }
             },
 
@@ -143,14 +169,48 @@ module.exports = NoGapDef.component({
                 // questionCount++;
                 // 存回應
                 var obj = {};
-                obj.deviceId = 3;
-                obj.activityId = 1;
+                obj.deviceId = this.Instance.DeviceMain.getCurrentDevice().deviceId;
+                obj.activityId = localActivityId;
                 obj.questionNumber = ++questionCount;
                 obj.answer = analogValue;
 
-                Instance.DeviceResponse.responses.recieveAnswer(obj);
+                // 不知道需不需要等待
+                // send DeviceResponse to server then save to DB
+                console.log("saving DeviceResponse....");
+                Instance.DeviceResponse.receiveDeviceResponse(obj);
 
-                // this.detectRotary();
+                // GAP State
+                this.gapState();
+                
+
+            },
+
+            gapState: function() {
+                buttonValue = button.read();
+                console.log("gapState button value:" + buttonValue);
+                
+
+                if(!buttonValue){
+                    this.detectRotary();
+                }
+
+                else{
+                    this.regapState = setTimeout(this.gapState.bind(this), 100);
+                }
+            },
+
+            playSound: function() {
+                soundValue = 1;
+                soundPin6.write(soundValue);
+                Promise.delay(500)
+                    .bind(this)
+                    .then(function() {
+                      soundValue = 0;
+                      soundPin6.write(soundValue);
+                      console.log(soundValue);
+                    });
+                // console.log(soundValue);
+                 this.replaySound = setTimeout(this.playSound.bind(this), 1000);
 
             },
 
@@ -187,9 +247,10 @@ module.exports = NoGapDef.component({
                     console.log("DeviceSeek.client.public.printff is called.");
                 },
 
-                // send question numbers to device 
-                initQuestionNumbers: function(questionNumbers) {
+                // send question numbers & activityID to device 
+                initQuestionNumbers: function(questionNumbers, activityId) {
                     localQuestionNumbers = questionNumbers;
+                    localActivityId = activityId;
                     questionCount = 0;
                     this.detectRotary();
                 }
