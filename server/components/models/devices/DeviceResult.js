@@ -116,12 +116,8 @@ module.exports = NoGapDef.component({
 
             Public: {
                 // save DeviceResult to DB
-                savaDeviceResult: function(deviceId, obj) {
+                savaDeviceResult: function(obj) {
                     this.results.createObject(obj,"true");
-                    // make device enter matching state
-                    // return Shared.DeviceStatus.runForDevice(deviceId, function(Instance) {
-                    //     return Instance.DeviceSeek.client.matchingState();
-                    // });
                 }
             }
         };

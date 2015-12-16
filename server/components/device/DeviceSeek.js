@@ -89,7 +89,6 @@ module.exports = NoGapDef.component({
         var localQuestionNumbers;
         var localActivityId;
         // var localResult = {};
-        var localDeviceId;
         var questionCount;
 
 
@@ -106,8 +105,6 @@ module.exports = NoGapDef.component({
 
             startSeeking: function(device) {
                 console.log('Start SeekSide initial...');
-
-                localDeviceId = this.Instance.DeviceMain.getCurrentDevice().deviceId;
 
                 // rotary initial
                 analogPin2 = new mraa.Aio(2); //setup access analog inpuput pin 2
@@ -152,17 +149,16 @@ module.exports = NoGapDef.component({
                 else{
                     // 傳所有問題的結果
                     var obj = {};
-                    obj.deviceId = localDeviceId;
+                    obj.deviceId = this.Instance.DeviceMain.getCurrentDevice().deviceId;
                     obj.activityId = localActivityId;
-                    obj.result = ;//用什麼格式存？
-                    obj.isGroup = ;//預設？
-                    obj.groupId = ;//預設？
+                    obj.result = ;
+                    obj.isGroup = ;
+                    obj.groupId = ;
                     // send DeviceResponse to server then save to DB
                     console.log("saving DeviceResult....");
-                    Instance.DeviceResponse.receiveDeviceResult(localDeviceId, obj);
+                    Instance.DeviceResponse.receiveDeviceResult(obj);
 
                     // enter to find match state
-
 
                 }
             },
