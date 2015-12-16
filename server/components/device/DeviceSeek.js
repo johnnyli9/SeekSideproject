@@ -88,8 +88,10 @@ module.exports = NoGapDef.component({
         var soundValue;
         var localQuestionNumbers;
         var localActivityId;
-        // var localResult = {};
+        var localResult = [];
         var localDeviceId;
+        var localSoundTimes;
+        var soundTimes;
         var questionCount;
 
 
@@ -112,7 +114,7 @@ module.exports = NoGapDef.component({
                 analogValue = analogPin2.read(); //read the value of the analog pin
                 
                 // button initial
-                button = new mraa.Gpio(13);
+                button = new mraa.Gpio(8);
                 button.dir(mraa.DIR_IN);
                 
                 // buzzer initial
@@ -125,8 +127,8 @@ module.exports = NoGapDef.component({
                 // this.playSound();
                 //this.detectRotary();
 
-                // led13 = new mraa.Gpio(13);
-                // led13.dir(mraa.DIR_OUT);
+                led13 = new mraa.Gpio(13);
+                led13.dir(mraa.DIR_OUT);
                 
                 // this.blinkLed();
 
@@ -143,7 +145,8 @@ module.exports = NoGapDef.component({
                     console.log("button:"+ buttonValue);
 
                     if(buttonValue){
-                        this.submitButton(analogValue,buttonValue);
+                        localResult[questionCount] = analogValue;
+                        this.submitButton(analogValue,buttonValue); 
                     }
                     else{
                         this.redetectRotary = setTimeout(this.detectRotary.bind(this), 100);
@@ -151,15 +154,20 @@ module.exports = NoGapDef.component({
                 }
                 else{
                     // 傳所有問題的結果
-                    // var obj = {};
-                    // obj.deviceId = this.Instance.DeviceMain.getCurrentDevice().deviceId;
-                    // obj.activityId = localActivityId;
+                    var obj = {};
+                    obj.deviceId = localDeviceId;
+                    obj.activityId = localActivityId;
+                    obj.result = "";
+                    for (var i = 0 ; i < localResult.length ; i++) {
+                        obj.result = obj.result + localResult[0];
+                    };
                     // obj.result = ;
-                    // obj.isGroup = ;
-                    // obj.groupId = ;
+                    obj.isGroup = 0;
+                    obj.groupId = null;
                     // send DeviceResponse to server then save to DB
-                    // console.log("saving DeviceResult....");
-                    // Instance.DeviceResponse.receiveDeviceResult(obj);
+                    console.log("saving DeviceResult....");
+                    Instance.DeviceResult.receiveDeviceResult(obj);
+                    this.matchingState();
 
                     // enter to find match state
 
@@ -203,26 +211,72 @@ module.exports = NoGapDef.component({
             },
 
             playSound: function() {
-                soundValue = 1;
-                soundPin6.write(soundValue);
-                Promise.delay(500)
-                    .bind(this)
-                    .then(function() {
-                      soundValue = 0;
-                      soundPin6.write(soundValue);
-                      console.log(soundValue);
-                    });
-                // console.log(soundValue);
-                 this.replaySound = setTimeout(this.playSound.bind(this), 1000);
-
+                if(localSoundTimes < soundTimes){
+                    soundValue = 1;
+                    soundPin6.write(soundValue);
+                    Promise.delay(500)
+                        .bind(this)
+                        .then(function() {
+                          soundValue = 0;
+                          soundPin6.write(soundValue);
+                          // console.log(soundValue);
+                        });
+                    // console.log(soundValue);
+                    localSoundTimes++;
+                    console.log("sound:" + localSoundTimes);
+                    this.replaySound = setTimeout(this.playSound.bind(this), 1000);
+                }
+                else{
+                    console.log("play sound finish");
+                }
             },
 
             matchingState: function() {
                 // this state is called by server
+                // console.log("set");
+                if(localResult[0])
+                switch(localResult[0]){
+                case 1:
+                    console.log("light 1111111");
+                    // this.setLedStatus(1);
+                    // this.blinkLed();
+                    break;
+                case 2:
+                    console.log("light 2222222");
+                    // this.setLedStatus(1);
+                    // this.blinkLed();
+                    break;
+                case 3:
+                    console.log("light 3333333");
+                    // this.setLedStatus(1);
+                    // this.blinkLed();
+                    break;
+                case 4:
+                    console.log("light 4444444");
+                    // this.setLedStatus(1);
+                    // this.blinkLed();          
+                    break;
+                default:
+                    // shouldn't happen
+                    console.log("error");
+                }
+                this.alike(5);
+                
+                
                 // nfc mode read other deviceId
                 
                 // call sever to decide match correct or not
 
+            },
+
+            alike: function(data){
+                // react buzz times
+                localSoundTimes = 0;
+                soundTimes = data;
+                this.playSound();
+                // decide group or not
+                
+                
             },
 
             setLedStatus: function(status) {
