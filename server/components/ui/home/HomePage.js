@@ -43,11 +43,11 @@ module.exports = NoGapDef.component({
                     //     console.log(Instance);                        
                     // }
 
-                    // return Shared.DeviceStatus.runForDevice(deviceId, function(Instance) {
-                    //     console.log("test");
-                    //     return Instance.DeviceSeek.client.initQuestionNumbers(questionNumbers);
+                    return Shared.DeviceStatus.runForDevice(deviceId, function(Instance) {
+                        console.log("test");
+                        return Instance.DeviceSeek.client.initQuestionNumbers(questionNumbers);
                         // return Instance.DeviceSeek.client.printffclient();
-                    // });
+                    });
                 }
                 
             },

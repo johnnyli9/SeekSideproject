@@ -89,6 +89,7 @@ module.exports = NoGapDef.component({
         var localQuestionNumbers;
         var localActivityId;
         // var localResult = {};
+        var localDeviceId;
         var questionCount;
 
 
@@ -117,6 +118,8 @@ module.exports = NoGapDef.component({
                 // buzzer initial
                 soundPin6 = new mraa.Gpio(3); //setup access digital input pin 6 (Pwm)
                 soundPin6.dir(mraa.DIR_OUT);
+
+                localDeviceId = this.Instance.DeviceMain.getCurrentDevice().deviceId;
                 
                 console.log("Waiting for Host send question numbers....");
                 // this.playSound();
