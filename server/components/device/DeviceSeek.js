@@ -148,15 +148,15 @@ module.exports = NoGapDef.component({
                 }
                 else{
                     // 傳所有問題的結果
-                    var obj = {};
-                    obj.deviceId = this.Instance.DeviceMain.getCurrentDevice().deviceId;
-                    obj.activityId = localActivityId;
-                    obj.result = ;
-                    obj.isGroup = ;
-                    obj.groupId = ;
+                    // var obj = {};
+                    // obj.deviceId = this.Instance.DeviceMain.getCurrentDevice().deviceId;
+                    // obj.activityId = localActivityId;
+                    // obj.result = ;
+                    // obj.isGroup = ;
+                    // obj.groupId = ;
                     // send DeviceResponse to server then save to DB
-                    console.log("saving DeviceResult....");
-                    Instance.DeviceResponse.receiveDeviceResult(obj);
+                    // console.log("saving DeviceResult....");
+                    // Instance.DeviceResponse.receiveDeviceResult(obj);
 
                     // enter to find match state
 

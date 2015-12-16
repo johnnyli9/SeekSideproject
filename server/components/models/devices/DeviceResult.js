@@ -116,7 +116,7 @@ module.exports = NoGapDef.component({
 
             Public: {
                 // save DeviceResult to DB
-                savaDeviceResult: function(obj) {
+                saveDeviceResult: function(obj) {
                     this.results.createObject(obj,"true");
                 }
             }
@@ -130,7 +130,7 @@ module.exports = NoGapDef.component({
 
             Public: {
                 receiveDeviceResult: function(deviceId, obj) {
-                    this.host.savaDeviceResult(deviceId, obj);
+                    this.host.saveDeviceResult(deviceId, obj);
                 }
             }
         };
