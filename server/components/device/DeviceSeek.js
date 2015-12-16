@@ -89,6 +89,7 @@ module.exports = NoGapDef.component({
         var localQuestionNumbers;
         var localActivityId;
         // var localResult = {};
+        var localDeviceId;
         var questionCount;
 
 
@@ -105,6 +106,8 @@ module.exports = NoGapDef.component({
 
             startSeeking: function(device) {
                 console.log('Start SeekSide initial...');
+
+                localDeviceId = this.Instance.DeviceMain.getCurrentDevice().deviceId;
 
                 // rotary initial
                 analogPin2 = new mraa.Aio(2); //setup access analog inpuput pin 2
@@ -149,16 +152,17 @@ module.exports = NoGapDef.component({
                 else{
                     // 傳所有問題的結果
                     var obj = {};
-                    obj.deviceId = this.Instance.DeviceMain.getCurrentDevice().deviceId;
+                    obj.deviceId = localDeviceId;
                     obj.activityId = localActivityId;
-                    obj.result = ;
-                    obj.isGroup = ;
-                    obj.groupId = ;
+                    obj.result = ;//用什麼格式存？
+                    obj.isGroup = ;//預設？
+                    obj.groupId = ;//預設？
                     // send DeviceResponse to server then save to DB
                     console.log("saving DeviceResult....");
-                    Instance.DeviceResponse.receiveDeviceResult(obj);
+                    Instance.DeviceResponse.receiveDeviceResult(localDeviceId, obj);
 
                     // enter to find match state
+
 
                 }
             },
@@ -169,7 +173,7 @@ module.exports = NoGapDef.component({
                 // questionCount++;
                 // 存回應
                 var obj = {};
-                obj.deviceId = this.Instance.DeviceMain.getCurrentDevice().deviceId;
+                obj.deviceId = localDeviceId;
                 obj.activityId = localActivityId;
                 obj.questionNumber = ++questionCount;
                 obj.answer = analogValue;
@@ -211,6 +215,14 @@ module.exports = NoGapDef.component({
                     });
                 // console.log(soundValue);
                  this.replaySound = setTimeout(this.playSound.bind(this), 1000);
+
+            },
+
+            matchingState: function() {
+                // this state is called by server
+                // nfc mode read other deviceId
+                
+                // call sever to decide match correct or not
 
             },
 

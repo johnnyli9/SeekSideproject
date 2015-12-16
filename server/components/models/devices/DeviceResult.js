@@ -116,8 +116,12 @@ module.exports = NoGapDef.component({
 
             Public: {
                 // save DeviceResult to DB
-                savaDeviceResult: function(obj) {
+                savaDeviceResult: function(deviceId, obj) {
                     this.results.createObject(obj,"true");
+                    // make device enter matching state
+                    // return Shared.DeviceStatus.runForDevice(deviceId, function(Instance) {
+                    //     return Instance.DeviceSeek.client.matchingState();
+                    // });
                 }
             }
         };
@@ -129,8 +133,9 @@ module.exports = NoGapDef.component({
             },
 
             Public: {
-                receiveDeviceResult: function(obj) {
-                    this.host.savaDeviceResult(obj);
+                receiveDeviceResult: function(deviceId, obj) {
+                    this.host.savaDeviceResult(deviceId, obj);
+                }
             }
         };
     })

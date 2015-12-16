@@ -35,14 +35,19 @@ module.exports = NoGapDef.component({
                 // for test function
                 printff: function(deviceId, questionNumbers) {
                     console.log("test is work!!!!!!!!");
-                    if (!this.Instance.User.isStaff()) 
-                        return Promise.reject(makeError('error.invalid.permissions'));
+                    // if (!this.Instance.User.isStaff()) 
+                    //     return Promise.reject(makeError('error.invalid.permissions'));
 
-                    return Shared.DeviceStatus.runForDevice(deviceId, function(Instance) {
-                        console.log("testtest");
-                        return Instance.DeviceSeek.client.initQuestionNumbers(questionNumbers);
+                    // runForeachDevice ..... TODO
+                    // return Shared.DeviceStatus.runForeachDevice(function(Instance) {
+                    //     console.log(Instance);                        
+                    // }
+
+                    // return Shared.DeviceStatus.runForDevice(deviceId, function(Instance) {
+                    //     console.log("test");
+                    //     return Instance.DeviceSeek.client.initQuestionNumbers(questionNumbers);
                         // return Instance.DeviceSeek.client.printffclient();
-                    });
+                    // });
                 }
                 
             },
