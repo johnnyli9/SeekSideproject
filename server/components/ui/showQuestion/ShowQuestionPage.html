@@ -1,0 +1,36 @@
+<div class="fill container-page" ng-controller="homeCtrl">
+	<br/><br/>
+	<div class="panel panel-primary panel">
+        <div class="panel-heading">
+            <div class="panel-title">
+            	&nbsp;
+                <span style= 'float:left;'>
+                	Activity
+                </span>
+                <!-- Next -->
+                <button type="button" class="btn btn-default btn-xm" ng-click="nextQuestion()" style="float:right; bottom: 5px; position: relative;">
+                    <span class="fa fa-arrow-right fa-lg" aria-hidden="true"/>
+                </button>
+                <!-- Pre -->
+                <button type="button" class="btn btn-default btn-xm" ng-click="preQuestion()" style="float:right; right: 5px; bottom: 5px; position: relative;">
+                    <span class="fa fa-arrow-left fa-lg" aria-hidden="true"/>
+                </button>
+
+                <span style= 'float:right; width:40px;'>
+                	&nbsp;&nbsp;
+                </span>
+	        
+                <select style="width:50px; height:30px; position:relative; float:left; left:10px; bottom:3px;" ng-model="activitySelect" ng-change="changeActivity()" class="form-control">
+				    <option ng-repeat="n in range(PC.getVideoNumber())">{{n}}</option>
+				</select>
+            </div>
+        </div>
+
+        <!-- show question -->
+        <div class="panel-body" >
+        	<pre style="border:0px; background-color:rgba(255, 255, 255, 0); padding:5px; margin:0px; font-size:80px; font-weight:900;">{{showQuestion[questionNumber].questionText}}</pre>
+        </div>
+    
+    </div>
+	
+</div>

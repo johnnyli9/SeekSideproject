@@ -160,6 +160,7 @@ module.exports = NoGapDef.component({
                     'DevicePage',
                     'AccountPage',
                     'QuestionPage',
+                    'ShowQuestionPage',
                 ],
 
                 mayActivate: function() {

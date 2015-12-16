@@ -266,6 +266,7 @@ module.exports = {
             'ui/device/DevicePage',
             'ui/account/AccountPage',
             'ui/question/QuestionPage',
+            'ui/showQuestion/ShowQuestionPage',
 
             // superuser pages:
             'ui/admin/AdminPage'
