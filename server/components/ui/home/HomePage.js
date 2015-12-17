@@ -42,12 +42,15 @@ module.exports = NoGapDef.component({
                     // return Shared.DeviceStatus.runForeachDevice(function(Instance) {
                     //     console.log(Instance);                        
                     // }
+                    // var test = this.Instance.DeviceResult.results.indices.deviceId.get("3");
+                    // console.log(test);
+                    
 
-                    return Shared.DeviceStatus.runForDevice(deviceId, function(Instance) {
-                        console.log("test");
-                        return Instance.DeviceSeek.client.initQuestionNumbers(questionNumbers);
+                    // return Shared.DeviceStatus.runForDevice(deviceId, function(Instance) {
+                    //     console.log("test");
+                    //     return Instance.DeviceSeek.client.initQuestionNumbers(questionNumbers);
                         // return Instance.DeviceSeek.client.printffclient();
-                    });
+                    // });
                 }
                 
             },
@@ -77,7 +80,8 @@ module.exports = NoGapDef.component({
                     // customize your HomePage's $scope here:
                     // for test function
                     $scope.test = function() {
-                        ThisComponent.host.printff("3","3");
+                        console.log("????");
+                        // ThisComponent.host.printff("3","3");
                     };
 
                 });

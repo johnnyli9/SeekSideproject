@@ -62,6 +62,11 @@ module.exports = NoGapDef.component({
                 printff: function() {
                     this.client.initQuestionNumbers();
                 }
+
+                // check alike
+                // checkAlike: function(targetDeviceId, selfDeviceId) {
+                //     // 
+                // }
             },
         };
     }),
@@ -266,6 +271,8 @@ module.exports = NoGapDef.component({
                 // nfc mode read other deviceId
                 
                 // call sever to decide match correct or not
+                // this.host.checkAlike(targetDeviceId, localDeviceId);
+
 
             },
 
@@ -275,7 +282,7 @@ module.exports = NoGapDef.component({
                 soundTimes = data;
                 this.playSound();
                 // decide group or not
-                
+
                 
             },
 
@@ -318,7 +325,11 @@ module.exports = NoGapDef.component({
                     localActivityId = activityId;
                     questionCount = 0;
                     this.detectRotary();
-                }
+                },
+
+                // callAlike: function(data) {
+                //     this.alike();
+                // }
             }
         };
     })

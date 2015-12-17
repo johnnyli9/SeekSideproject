@@ -31,6 +31,9 @@ module.exports = NoGapDef.component({
                         {
                             unique: true,
                             key: ['resultId']
+                            
+                            // unique: true,
+                            // key: ['deviceId']
                         },
                     ],
 
