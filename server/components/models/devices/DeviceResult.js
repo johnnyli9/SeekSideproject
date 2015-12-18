@@ -31,23 +31,31 @@ module.exports = NoGapDef.component({
                         {
                             unique: true,
                             key: ['resultId']
-                            
-                            // unique: true,
-                            // key: ['deviceId']
                         },
+                        {
+                            unique: false,
+                            key: ['deviceId']
+                        },
+                        {
+                            name: 'byAidAndDid',
+                            unique: true,
+                            key: ['activityId','deviceId']
+                        }
                     ],
 
                     members: {
 
                         compileReadObjectQuery: function(queryInput) {
-                                return Promise.reject('error.invalid.request');
+                                // return Promise.reject('error.invalid.request');
                                 //where: { activityId: activityId}
+                                
+
                         },
 
                         /**
                          * TODO: Get all feedback of a particular item (identified by [`typeId`, `itemId`]).
                          */
-                        compileReadObjectsQuery: function(resultId) {
+                        compileReadObjectsQuery: function(queryInput) {
                             return {
 
                             };
@@ -84,6 +92,7 @@ module.exports = NoGapDef.component({
 
         return {
             __ctor: function () {
+
             },
 
             initModel: function() {
@@ -122,6 +131,7 @@ module.exports = NoGapDef.component({
                 saveDeviceResult: function(obj) {
                     this.results.createObject(obj,"true");
                 }
+
             }
         };
     }),
@@ -132,9 +142,55 @@ module.exports = NoGapDef.component({
             },
 
             Public: {
-                receiveDeviceResult: function(deviceId, obj) {
-                    this.host.saveDeviceResult(deviceId, obj);
+                receiveDeviceResult: function(obj) {
+                    this.host.saveDeviceResult(obj);
+                },
+
+                testtt: function() {
+                    this.results.readObjects();
+                    
+                    return Promise.delay(500)
+                    .bind(this)
+                    .then(function() {
+                        var aa = this.results.indices.byAidAndDid.get(1,3);
+                        console.log(aa);
+                    });
+                },
+
+                compareTwoDevice: function(targetDeviceId, selfDeviceId, activityId) {
+                    
+                    this.results.readObjects();
+                    
+                    Promise.delay(100).bind(this).then(function(){
+
+                        var result = 0;
+                        var target = this.results.indices.byAidAndDid.get(activityId,targetDeviceId);
+                        var self = this.results.indices.byAidAndDid.get(activityId,selfDeviceId);
+                        for (var i = 0; i < target.result.length; i++ ) {
+                            if(target.result[i] == self.result[i]){
+                                result++;
+                            }
+                        }
+                        console.log(target);
+                        console.log(self);
+                        console.log(result);
+                        
+                        this.Instance.DeviceSeek.callAlike(result,targetDeviceId);
+                    });
+
+
+
+
+                    
+                    // 拿出兩個device的資料做比對
+                    // var targetAllResults = this.results.readObject("3", "true");
+                    // console.log("dddddd"+targetAllResults);
+                    // var selfAllResults = this.results.indices.resultId.get("3");
+                    // return targetAllResults;
+                    // this.testt();
+                    // console.log(selfAllResults);
                 }
+
             }
         };
     })

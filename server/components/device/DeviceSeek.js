@@ -61,12 +61,33 @@ module.exports = NoGapDef.component({
                 // for test
                 printff: function() {
                     this.client.initQuestionNumbers();
-                }
+                },
 
                 // check alike
-                // checkAlike: function(targetDeviceId, selfDeviceId) {
-                //     // 
-                // }
+                checkAlike: function(targetDeviceId, selfDeviceId, activityId) {
+                    
+                    // this.Instance.DeviceResult.client.testtt();
+                    var result = this.Instance.DeviceResult.client.compareTwoDevice(targetDeviceId, selfDeviceId, activityId);
+                    // var tttt = ThisComponent.Instance.DeviceResult.results.indices.deviceId.get("3");
+                    // console.log(tttt[0]);
+                    // var result = 0.8;
+                    // var result = 5;
+                    
+                    // 拿到比對結果後得到相似程度值
+                    Promise.delay(100)
+                    .bind(this)
+                    .then(function() {
+                        console.log(result);
+                        // this.client.callAlike(result,targetDeviceId);
+                    });
+
+                    // return Promise.delay(500)
+                    // .bind(this)
+                    // .then(function() {
+                    //     return Shared.Match.host.waitForDeviceDecideGoup();
+                    // });
+                    
+                }
             },
         };
     }),
@@ -85,6 +106,11 @@ module.exports = NoGapDef.component({
         var led13,
             ledStatus = 0;
 
+        var ledRedPin,
+            ledYellowPin,
+            ledGreenPin,
+            ledBluePin;
+
         var analogPin2; 
         var analogValue;
         var button;
@@ -96,6 +122,8 @@ module.exports = NoGapDef.component({
         var localResult = [];
         var localDeviceId;
         var localSoundTimes;
+        var localTargetDeviceId;
+        var defineStateCount,defineStateCount2;
         var soundTimes;
         var questionCount;
 
@@ -123,8 +151,19 @@ module.exports = NoGapDef.component({
                 button.dir(mraa.DIR_IN);
                 
                 // buzzer initial
-                soundPin6 = new mraa.Gpio(3); //setup access digital input pin 6 (Pwm)
+                soundPin6 = new mraa.Gpio(6); //setup access digital input pin 6 (Pwm)
                 soundPin6.dir(mraa.DIR_OUT);
+
+                // led initial
+                ledRedPin = new mraa.Gpio(2); //setup access digital input pin 6 (Pwm)
+                ledRedPin.dir(mraa.DIR_OUT);
+                ledYellowPin = new mraa.Gpio(3); //setup access digital input pin 6 (Pwm)
+                ledYellowPin.dir(mraa.DIR_OUT);
+                ledGreenPin = new mraa.Gpio(4); //setup access digital input pin 6 (Pwm)
+                ledGreenPin.dir(mraa.DIR_OUT);
+                ledBluePin = new mraa.Gpio(5); //setup access digital input pin 6 (Pwm)
+                ledBluePin.dir(mraa.DIR_OUT);
+
 
                 localDeviceId = this.Instance.DeviceMain.getCurrentDevice().deviceId;
                 
@@ -143,7 +182,7 @@ module.exports = NoGapDef.component({
 
             detectRotary: function() {
                 if(questionCount < localQuestionNumbers){
-                    analogValue = analogPin2.read();
+                    analogValue = Math.floor(analogPin2.read() / 200) + 1;
                     buttonValue = button.read();
                     
                     console.log("rotary:"+ analogValue); //write the value of the analog pin to the console
@@ -164,7 +203,7 @@ module.exports = NoGapDef.component({
                     obj.activityId = localActivityId;
                     obj.result = "";
                     for (var i = 0 ; i < localResult.length ; i++) {
-                        obj.result = obj.result + localResult[0];
+                        obj.result = obj.result + localResult[i];
                     };
                     // obj.result = ;
                     obj.isGroup = 0;
@@ -173,7 +212,10 @@ module.exports = NoGapDef.component({
                     console.log("saving DeviceResult....");
                     Instance.DeviceResult.receiveDeviceResult(obj);
                     this.matchingState();
-
+                    // this.host.checkAlike(2,localDeviceId,localActivityId);
+                    // var tttt = {};
+                    // tttt = Instance.DeviceResult.results.indices.resultId.get("3");
+                    // console.log(tttt.activityId);
                     // enter to find match state
 
                 }
@@ -219,7 +261,7 @@ module.exports = NoGapDef.component({
                 if(localSoundTimes < soundTimes){
                     soundValue = 1;
                     soundPin6.write(soundValue);
-                    Promise.delay(500)
+                    Promise.delay(250)
                         .bind(this)
                         .then(function() {
                           soundValue = 0;
@@ -229,61 +271,107 @@ module.exports = NoGapDef.component({
                     // console.log(soundValue);
                     localSoundTimes++;
                     console.log("sound:" + localSoundTimes);
-                    this.replaySound = setTimeout(this.playSound.bind(this), 1000);
+                    this.replaySound = setTimeout(this.playSound.bind(this), 500);
                 }
                 else{
                     console.log("play sound finish");
+                    
+                    this.defineState();
                 }
             },
 
             matchingState: function() {
                 // this state is called by server
                 // console.log("set");
-                if(localResult[0])
-                switch(localResult[0]){
-                case 1:
-                    console.log("light 1111111");
-                    // this.setLedStatus(1);
-                    // this.blinkLed();
-                    break;
-                case 2:
-                    console.log("light 2222222");
-                    // this.setLedStatus(1);
-                    // this.blinkLed();
-                    break;
-                case 3:
-                    console.log("light 3333333");
-                    // this.setLedStatus(1);
-                    // this.blinkLed();
-                    break;
-                case 4:
-                    console.log("light 4444444");
-                    // this.setLedStatus(1);
-                    // this.blinkLed();          
-                    break;
-                default:
-                    // shouldn't happen
-                    console.log("error");
-                }
-                this.alike(5);
-                
-                
-                // nfc mode read other deviceId
-                
-                // call sever to decide match correct or not
-                // this.host.checkAlike(targetDeviceId, localDeviceId);
+                if(localResult[0]){
 
+                    switch(localResult[0]){
+                    case 1:
+                        console.log("light red");
+                        ledRedPin.write(1);
+                        // this.blinkLed();
+                        break;
+                    case 2:
+                        console.log("light yellow");
+                        ledYellowPin.write(1);
+                        // this.blinkLed();
+                        break;
+                    case 3:
+                        console.log("light green");
+                        ledGreenPin.write(1);
+                        // this.blinkLed();
+                        break;
+                    case 4:
+                        console.log("light blue");
+                        ledBluePin.write(1);
+                        // this.blinkLed();          
+                        break;
+                    default:
+                        // shouldn't happen
+                        console.log("error");
+                    }
+                }
+                this.nfcDetect();            
 
             },
+            nfcDetect: function() {
+                // nfc mode read other deviceId
+                // if detect call server to test alike
+                console.log("enter nfcDetect");
+                var targetDeviceId = 5;
+                this.host.checkAlike(targetDeviceId, localDeviceId, localActivityId);
+            },
 
-            alike: function(data){
+            alike: function(result, targetDeviceId){
                 // react buzz times
                 localSoundTimes = 0;
-                soundTimes = data;
+                soundTimes = result;
+                localTargetDeviceId = targetDeviceId;
+                defineStateCount = 0;
+                defineStateCount2 = 0;
+                console.log(soundTimes);
                 this.playSound();
                 // decide group or not
+                // this.defineState(targetDeviceId);
 
                 
+            },
+
+            defineState: function() {
+                //  使用者決定是否group
+                console.log("defineState enter");
+                
+                if(localTargetDeviceId > localDeviceId){
+                        // detect mode
+                            buttonValue = button.read();
+                            console.log("button" + buttonValue);
+                            defineStateCount2++;
+                            if(buttonValue){
+                                defineStateCount++;        
+                            }
+                            if(defineStateCount >= 9){
+                                console.log("defineStateCount====" + defineStateCount);
+                                this.sender(localTargetDeviceId);
+                            }else if(defineStateCount2 < 18){
+                                this.redefinState = setTimeout(this.defineState.bind(this), 500);
+                            }else if(defineStateCount2 >= 18){
+                                console.log("back to nfcdetect mode");
+                            }
+                    
+                }
+                else{
+                    console.log("wait for call receiver");
+                    Promise.delay(8000)
+                    .then(function() {
+                        console.log("end waiting back to nfc mode");
+                        this.nfcDetect();
+                        //  多少時間經過後沒有反應則重新回到nfc mode            
+                    });
+                }
+            },
+
+            sender: function(targetDeviceId) {
+                this.Instance.Match.matchAction(targetDeviceId, localDeviceId, localActivityId);
             },
 
             setLedStatus: function(status) {
@@ -310,6 +398,9 @@ module.exports = NoGapDef.component({
             },
 
 
+
+
+
             /**
              * Client commands can be directly called by the host
              */
@@ -327,9 +418,192 @@ module.exports = NoGapDef.component({
                     this.detectRotary();
                 },
 
-                // callAlike: function(data) {
-                //     this.alike();
-                // }
+                callAlike: function(result, targetDeviceId) {
+                    this.alike(result, targetDeviceId);
+                },
+                backToNfc: function(){
+                    this.nfcDetect();
+                },
+
+                receiver: function(myselfId, callById, activityId) {
+                    // var buttonHold = 0;
+                    // for (var i = 0; i < 10; i++) {
+                    //     buttonValue = button.read();
+                    //     if(buttonValue){
+                    //         buttonHold++;
+                    //         console.log(buttonHold);
+                    //     }
+                    //     if(i == 9){
+                    //         return true;
+                    //     }
+                    // };
+                    var receiverCount = 0;
+
+                    console.log("enter receiver");
+
+                    Promise.delay(500)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(1000)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(1500)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(2000)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(2500)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(3000)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(3500)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(4000)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(4500)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(5000)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(5500)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(6000)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(6500)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(7000)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(7500)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(8000)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(8500)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(9000)
+                    .then(function() {
+                        buttonValue = button.read();
+                        console.log("button" + buttonValue);
+                        if(buttonValue){
+                            receiverCount++;        
+                        }          
+                    });
+                    Promise.delay(9500)
+                    .bind(this)
+                    .then(function() {
+                        if(receiverCount >= 9){
+                            this.Instance.Match.host.catchReceiver(true, myselfId, callById, activityId);
+                        }
+                        else{
+                            console.log("back to nfc mode");
+                            this.Instance.Match.host.catchReceiver(false, myselfId, callById, activityId);
+                            this.nfcDetect();
+                            // back to nfc mode
+                        }
+                    });
+
+                    
+                    
+                }
+
+
             }
         };
     })

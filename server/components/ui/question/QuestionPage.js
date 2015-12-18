@@ -35,7 +35,22 @@ module.exports = NoGapDef.component({
              * Host commands can be directly called by the client
              */
             Public: {
-                
+                // send activity to device
+                sendToDevice: function(deviceId, questionNumbers, activityId) {
+                    console.log("test is work!!!!!!!!");
+                    // if (!this.Instance.User.isStaff()) 
+                    //     return Promise.reject(makeError('error.invalid.permissions'));
+
+                    // runForeachDevice ..... TODO
+                    // return Shared.DeviceStatus.runForeachDevice(function(Instance) {
+                    //     console.log(Instance);                        
+                    // }
+                    
+
+                    return Shared.DeviceStatus.runForDevice(deviceId, function(Instance) {
+                        return Instance.DeviceSeek.client.initQuestionNumbers(questionNumbers, activityId);
+                    });
+                }
             },
         };
     }),
@@ -74,6 +89,20 @@ module.exports = NoGapDef.component({
                     // customize your HomePage's $scope here:
 
                     $scope.activitiesInfo = Instance.Activity.activities.list;
+
+                    // send question number and activityId to devices
+                    $scope.sendToDevice = function(activityId, questionNumbers) {
+                        // console.log("????");
+                        // var tttt = ThisComponent.Instance.DeviceResult.results.indices.deviceId.get("3");
+                        // console.log(tttt[0]);
+                        // var tttt = ThisComponent.Instance.DeviceResult.host.compareTwoDevice("3", "4", activityId);
+                        // var tttt = ThisComponent.Instance.DeviceResult.host.;
+                        // console.log(tttt);
+                        // console.log(activityId);
+                        // console.log(questionNumbers);
+
+                        ThisComponent.host.sendToDevice("3", questionNumbers, activityId);
+                    };
 
                     // create activity
                     $scope.createActivity = function() {    
@@ -527,6 +556,7 @@ module.exports = NoGapDef.component({
             },
 
             onPageActivate: function() {//TODO Debug
+                Instance.DeviceResult.results.readObjects();
                 Instance.User.users.readObjects();
                 Instance.Activity.activities.readObjects();
                 Instance.ActivityQuestion.activityQuestions.readObjects();
@@ -545,6 +575,11 @@ module.exports = NoGapDef.component({
                     }
                 },
                 activityQuestions: {
+                    updated: function(newValues, queryData, users) {
+                        ThisComponent.page.invalidateView();
+                    }
+                },
+                results: {
                     updated: function(newValues, queryData, users) {
                         ThisComponent.page.invalidateView();
                     }

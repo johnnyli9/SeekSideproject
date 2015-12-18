@@ -108,6 +108,38 @@ module.exports = NoGapDef.component({
             },
 
             initHost: function() {
+            },
+
+            Public:{
+                test: function(targetDeviceId, selfDeviceId, activityId) {
+                    var selfDeviceAgree;
+                    Shared.DeviceStatus.runForDevice(targetDeviceId, function(Instance) {
+                            Instance.DeviceSeek.client.receiver(targetDeviceId, selfDeviceId, activityId);
+                            //  多少時間經過後沒有反應則重新回到nfc mode                     
+
+                    });
+                    
+                },
+                catchReceiver: function(agree, myselfId, callById, activityId){
+                    if(agree){
+                        console.log("ok!!!!! Group");
+                        var obj = {};
+                        obj.activityId = activityId;
+                        obj.groupId = null;
+                        obj.member = myselfId +","+ callById;
+                        console.log(obj.activityId);
+                        console.log(obj.groupId);
+                        console.log(obj.member);
+                        this.matches.createObject(obj, "true");
+                    }
+                    else{
+                        Shared.DeviceStatus.runForDevice(callById, function(Instance) {
+                            Instance.DeviceSeek.client.backToNfc();
+                            //  多少時間經過後沒有反應則重新回到nfc mode                     
+
+                    });
+                    }
+                }
             }
         };
     }),
@@ -118,6 +150,17 @@ module.exports = NoGapDef.component({
             },
 
             Public: {
+                matchAction: function(targetDeviceId, selfDeviceId, activityId) {
+                    // var selfDeviceAgree;
+                    // Instance.DeviceStatus.runForDevice(targetDeviceId, function(Instance) {
+                    //     selfDeviceAgree = Instance.DeviceSeek.client.receiver();
+                    //     console.log("selfDeviceAgree ====" + selfDeviceAgree +"=====");
+                    // });
+                    // if (selfDeviceAgree) {
+                    //     console.log("ok!!!!!Group");
+                    // };
+                    this.host.test(targetDeviceId, selfDeviceId, activityId);
+                }
             }
         };
     })

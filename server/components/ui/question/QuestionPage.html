@@ -37,6 +37,10 @@
                                 <button type="button" class="btn btn-default btn-xm" ng-click="editActivity(activity, activity.activityId)"style="float:right; margin:1px;">
                                     <span class="glyphicon glyphicon-pencil fa-lg" aria-hidden="true"/>
                                 </button>
+                                <!-- send -->
+                                <button type="button" class="btn btn-default btn-xm" ng-click="sendToDevice(activity.activityId, activity.amountOfQuestion)"style="float:right; margin:1px;">
+                                    <span class="glyphicon glyphicon-send fa-lg" aria-hidden="true"/>
+                                </button>
                             </td>
                         </tr>
                         <tr ng-show="hiddenActivity[activity.activityId]">
