@@ -1,5 +1,16 @@
-<div class="fill container-page" ng-controller="accountCtrl">
+<img style="position:fixed; left:0%; top:0%; display:block;
+    min-height:100%;
+    min-width:100%; z-index:-1000;
+    -webkit-filter: blur(7px); 
+    -moz-filter: blur(8px);
+    -ms-filter: blur(8px);    
+    filter: blur(8px);"
+    src='/pub/img/background4.jpg'/>
 
+<h1 class="" style="color:white; font-size:24px; position:fixed;  font-weight:600; top:-12px; left:15px;">SeekSide</h1>
+
+<div class="fill container-page" ng-controller="accountCtrl">
+    <br/><br/>
     <div ng-if="currentUser.role != currentUser.displayRole"
         ng-click="clickDefaultDisplayRole()"
         class="alert alert-danger fill"
@@ -29,9 +40,9 @@
     <!-- ##################################################################################################### -->
     <!-- Account Overview -->
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <div class="panel-title">
+<!--     <div class="panel panel-primary" style="background-color:rgba(0, 0, 0, 0); border-color:#1CDED5;">
+        <div class="panel-heading" style="border:#1CDED5;">
+            <div class="panel-title" style="background-color:#1CDED5; font-size:25px; font-weight:500;">
                 <localize key="account.yourAccount"></localize> - <span>{{currentUser.userName}}</span>
             </div>
         </div>
@@ -39,16 +50,16 @@
             <span>
                 Hello!
             </span>
-        </div> <!-- panel-body -->
-    </div> <!-- panel -->
+        </div> 
+    </div> -->
 
 
     <!-- ##################################################################################################### -->
     <!-- Preferences -->
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <div class="panel-title">
+    <div class="panel panel-primary" style="background-color:rgba(0, 0, 0, 0); border-color:#1CDED5;">
+        <div class="panel-heading" style="border:#1CDED5;">
+            <div class="panel-title" style="background-color:#1CDED5; font-size:25px; font-weight:500;">
                 <!-- <localize key="account.yourAccount" /> -->
                 Preferences
             </div>
@@ -57,7 +68,7 @@
 
             <!-- Language selection -->
             <div class="btn-group" dropdown is-open="status.isopen">
-                <button type="button" class="btn btn-lg btn-fancy dropdown-toggle" ng-disabled="disabled">
+                <button type="button" class="btn btn-lg btn-fancy dropdown-toggle" ng-disabled="disabled" style="background-color:#1CDED5; border:#1CDED5; color:white;">
                     <localize key="account.currentLanguage"/> - <localize key="{{currentUser.locale}}"/>
                     <span ng-show="!busyLocale" class="caret"></span>
                     <span ng-show="busyLocale"><i class="fa fa-spinner fa-spin"></i></span>
@@ -77,10 +88,9 @@
     <!-- ##################################################################################################### -->
     <!-- Admin stuff -->
 
-    <div class="panel panel-primary"
-            ng-show="currentUserIsStaff">
-        <div class="panel-heading">
-            <div class="panel-title">
+    <div class="panel panel-primary" style="background-color:rgba(0, 0, 0, 0); border-color:#1CDED5;" ng-show="currentUserIsStaff">
+        <div class="panel-heading" style="border:#1CDED5;">
+            <div class="panel-title" style="background-color:#1CDED5; font-size:25px; font-weight:500;">
                 <!-- <localize key="account.yourAccount" /> -->
                 Admin
             </div>
@@ -92,7 +102,8 @@
             <div>
                 <a ng-disabled="busyRole"
                     class="btn btn-lg btn-fancy" 
-                    ng-click="clickStandardUserDisplayRole()">
+                    ng-click="clickStandardUserDisplayRole()"
+                    style="background-color:#1CDED5; border:#1CDED5; color:white;">
                         <localize key="account.changeToStandardUserView" />
                         <span ng-style="{visibility: busyRole && 'visible' || 'hidden'}"><i class="fa fa-spinner fa-spin"></i></span>
                 </a>
@@ -104,8 +115,9 @@
     <!-- Logout button -->
     <div class="">
         <a ng-disabled="busy"
-            class="btn btn-lg btn-danger"
-            ng-click="clickLogout()">
+            class="btn btn-lg "
+            ng-click="clickLogout()"
+            style="float:right; width:120px; background-color:#FF4A4A; border:#FF4A4A; color:white;">
             <localize key="Logout"></localize>
             <span ng-style="{visibility: busy && 'visible' || 'hidden'}">
                 <i class="fa fa-spinner fa-spin"></i>

@@ -1,45 +1,55 @@
+<img style="position:fixed; left:0%; top:0%; display:block;
+    min-height:100%;
+    min-width:100%; z-index:-1000;
+    -webkit-filter: blur(7px); 
+    -moz-filter: blur(8px);
+    -ms-filter: blur(8px);    
+    filter: blur(8px);"
+    src='/pub/img/background4.jpg'/>
+
+<h1 class="" style="color:white; font-size:24px; position:fixed;  font-weight:600; top:-12px; left:15px;">SeekSide</h1>
+
 <div class="fill container-page" ng-controller="questionCtrl">
-	
-	<!-- activities -->
-    </br></br>
-    <div class="panel panel-primary panel">
-        <div class="panel-heading">
-            <div class="panel-title">
-                Video Gallery
+	<br/><br/>
+	<!-- activities -->    
+    <div class="panel panel-primary panel" style="background-color:rgba(0, 0, 0, 0); border-color:#1CDED5;">
+        <div class="panel-heading" style="border:#1CDED5;">
+            <div class="panel-title" style="background-color:#1CDED5; font-size:25px; font-weight:500;">
+                Creat Question
                 <!-- create activity -->
-                <button type="button" class="btn btn-default btn-xm" ng-click="createActivity()" style="float:right; bottom: 5px; position: relative;">
+                <button type="button" class="btn btn-default btn-xm" ng-click="createActivity()" style="float:right; top:2px; position: relative; background-color:white; border:white; color:#1CDED5;">
                     <span class="glyphicon glyphicon-plus fa-lg" aria-hidden="true"/>
                 </button>
             </div>
         </div>
 
-        <div class="panel-body" >
+        <div class="panel-body">
             
             <div>
-                <table class="table table-hover">
+                <table class="table">
                     <thead>
-                        <tr class= "info">
-                            <th class="col-md-1">#</th>
-                            <th class="col-md-8">Activity</th>
-                            <th class="col-md-3" ></th>
+                        <tr style="">
+                            <th class="col-md-1" style="color:white; font-size:20px;">#</th>
+                            <th class="col-md-8" style="color:white; font-size:20px;">Activity</th>
+                            <th class="col-md-3" style="color:white; font-size:20px;"></th>
                         </tr>
                     <tbody  ng-repeat="activity in activitiesInfo.slice().reverse()">
                         <tr>
-                            <td>{{activitiesInfo.length - $index}}</td>
-                            <td>{{activity.titleText}}</td>
+                            <td style="color:white; font-size:20px;">{{activitiesInfo.length - $index}}</td>
+                            <td style="color:white; font-size:20px;">{{activity.titleText}}</td>
                             <td>
       
                                 <!-- delete -->
-                                <button ng-show="1" type="button" class="btn btn-default btn-xm" ng-click="deleteActivity(activity.activityId)"style="float:right; margin:1px;">
-                                    <span class="fa fa-trash-o fa-lg" aria-hidden="true"/>
+                                <button ng-show="1" type="button" class="btn btn-default btn-xm" ng-click="deleteActivity(activity.activityId)"style="float:right; margin:1px; background-color:white; border:white; color:#1CDED5;">
+                                    <span class="fa fa-trash-o fa-lg" aria-hidden="true" />
                                 </button>
                                 <!-- edit -->
-                                <button type="button" class="btn btn-default btn-xm" ng-click="editActivity(activity, activity.activityId)"style="float:right; margin:1px;">
-                                    <span class="glyphicon glyphicon-pencil fa-lg" aria-hidden="true"/>
+                                <button type="button" class="btn btn-default btn-xm" ng-click="editActivity(activity, activity.activityId)"style="float:right; margin:1px; background-color:white; border:white; color:#1CDED5;">
+                                    <span class="glyphicon glyphicon-pencil fa-lg" aria-hidden="true" style="top:3px;"/>
                                 </button>
                                 <!-- send -->
-                                <button type="button" class="btn btn-default btn-xm" ng-click="sendToDevice(activity.activityId, activity.amountOfQuestion)"style="float:right; margin:1px;">
-                                    <span class="glyphicon glyphicon-send fa-lg" aria-hidden="true"/>
+                                <button type="button" class="btn btn-default btn-xm" ng-click="sendToDevice(activity.activityId, activity.amountOfQuestion)"style="float:right; margin:1px; background-color:white; border:white; color:#1CDED5;">
+                                    <span class="glyphicon glyphicon-send fa-lg" aria-hidden="true" style="right:2px; top:3px;"/>
                                 </button>
                             </td>
                         </tr>

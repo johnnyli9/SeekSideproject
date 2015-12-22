@@ -17,18 +17,18 @@
 	    <!-- Question -->
 		<label style="font-size:20px;">Question</label>
 		<!-- add button -->
-		<button type="button" class="btn btn-info btn-xm" ng-click="addQuestion()" style="bottom: 3px; position: relative;">
+		<button type="button" class="btn btn-info btn-xm" ng-click="addQuestion()" style="bottom: 3px; position: relative; background-color:#1CDED5; border:#1CDED5;">
             <span class="glyphicon glyphicon-plus fa-lg" aria-hidden="true"/>
         </button>
         <!-- sub button -->
-        <button type="button" class="btn btn-info btn-xm" ng-click="subQuestion()" style="bottom: 3px; position: relative;">
+        <button type="button" class="btn btn-info btn-xm" ng-click="subQuestion()" style="bottom: 3px; position: relative; background-color:#1CDED5; border:#1CDED5;">
             <span class="glyphicon glyphicon-minus fa-lg" aria-hidden="true"/>
         </button>
 		<br>&nbsp;</br>
 		
 		<!-- question 1 -->
-		<div class="bg-info">
-			<div style="margin:10px">
+		<div style="background-color:rgba(28, 222, 213, 0.27); border:rgba(28, 222, 213, 0.27);" class="form-control">
+			<div style="margin:5px">
 				<label style="font-size:20px;">question 1</label>
 				<textarea ng-model="activityQuestion[0].questionText" class="form-control" rows="6" placeholder="question description input"></textarea>
 				<br/>
@@ -37,8 +37,8 @@
 		<br/>
 
 		<!-- question 2 -->
-		<div ng-show='showQuestion[1]' class="bg-info">
-			<div style="margin:10px">
+		<div ng-show='showQuestion[1]' style="background-color:rgba(28, 222, 213, 0.27); border:rgba(28, 222, 213, 0.27);" class="form-control">
+			<div style="margin:5px">
 				<label style="font-size:20px;">question 2</label>
 				<textarea ng-model="activityQuestion[1].questionText" class="form-control" rows="6" placeholder="question description input"></textarea>
 				<br/>
@@ -47,8 +47,8 @@
 		<br/>
 
 		<!-- question 3 -->
-		<div ng-show='showQuestion[2]' class="bg-info">
-			<div style="margin:10px">
+		<div ng-show='showQuestion[2]' style="background-color:rgba(28, 222, 213, 0.27); border:rgba(28, 222, 213, 0.27);" class="form-control">
+			<div style="margin:5px">
 				<label style="font-size:20px;">question 3</label>
 				<textarea ng-model="activityQuestion[2].questionText" class="form-control" rows="6" placeholder="question description input"></textarea>
 				<br/>
@@ -57,8 +57,8 @@
 		<br/>
 
 		<!-- question 4 -->
-		<div ng-show='showQuestion[3]' class="bg-info">
-			<div style="margin:10px">
+		<div ng-show='showQuestion[3]' style="background-color:rgba(28, 222, 213, 0.27); border:rgba(28, 222, 213, 0.27);" class="form-control">
+			<div style="margin:5px">
 				<label style="font-size:20px;">question 4</label>
 				<textarea ng-model="activityQuestion[3].questionText" class="form-control" rows="6" placeholder="question description input"></textarea>
 				<br/>
@@ -67,13 +67,14 @@
 		<br/>
 
 		<!-- question 5 -->
-		<div ng-show='showQuestion[4]' class="bg-info">
-			<div style="margin:10px">
+		<div ng-show='showQuestion[4]' style="background-color:rgba(28, 222, 213, 0.27); border:rgba(28, 222, 213, 0.27);" class="form-control">
+			<div style="margin:5px">
 				<label style="font-size:20px;">question 5</label>
 				<textarea ng-model="activityQuestion[4].questionText" class="form-control" rows="6" placeholder="question description input"></textarea>
 				<br/>
 			</div>
 		</div>
+		<br/>
 
 
 	    <div>

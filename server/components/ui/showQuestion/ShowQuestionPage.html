@@ -1,18 +1,29 @@
-<div class="fill container-page" ng-controller="homeCtrl">
+<img style="position:fixed; left:0%; top:0%; display:block;
+    min-height:100%;
+    min-width:100%; z-index:-1000;
+    -webkit-filter: blur(7px); 
+    -moz-filter: blur(8px);
+    -ms-filter: blur(8px);    
+    filter: blur(8px);"
+    src='/pub/img/background4.jpg'/>
+
+<h1 class="" style="color:white; font-size:24px; position:fixed;  font-weight:600; top:-12px; left:15px;">SeekSide</h1>
+
+<div class="fill container-page" ng-controller="showQuestionCtrl">
 	<br/><br/>
-	<div class="panel panel-primary panel">
-        <div class="panel-heading">
-            <div class="panel-title">
+	<div class="panel panel-primary panel" style="background-color:rgba(0, 0, 0, 0); border-color:#1CDED5;">
+        <div class="panel-heading" style="border:#1CDED5;">
+            <div class="panel-title" style="background-color:#1CDED5; font-size:25px; font-weight:500;">
             	&nbsp;
                 <span style= 'float:left;'>
                 	Activity
                 </span>
                 <!-- Next -->
-                <button type="button" class="btn btn-default btn-xm" ng-click="nextQuestion()" style="float:right; bottom: 5px; position: relative;">
+                <button type="button" class="btn btn-default btn-xm" ng-click="nextQuestion()" style="float:right; top:2px; position:relative; background-color:white; border:white; color:#1CDED5;">
                     <span class="fa fa-arrow-right fa-lg" aria-hidden="true"/>
                 </button>
                 <!-- Pre -->
-                <button type="button" class="btn btn-default btn-xm" ng-click="preQuestion()" style="float:right; right: 5px; bottom: 5px; position: relative;">
+                <button type="button" class="btn btn-default btn-xm" ng-click="preQuestion()" style="float:right; right:5px; top:2px; position:relative; background-color:white; border:white; color:#1CDED5;">
                     <span class="fa fa-arrow-left fa-lg" aria-hidden="true"/>
                 </button>
 
@@ -20,7 +31,7 @@
                 	&nbsp;&nbsp;
                 </span>
 	        
-                <select style="width:50px; height:30px; position:relative; float:left; left:10px; bottom:3px;" ng-model="activitySelect" ng-change="changeActivity()" class="form-control">
+                <select style="width:50px; height:30px; position:relative; float:left; left:10px; top:3px; background-color:white; border:white; color:#1CDED5;" ng-model="activitySelect" ng-change="changeActivity()" class="form-control">
 				    <option ng-repeat="n in range(PC.getVideoNumber())">{{n}}</option>
 				</select>
             </div>
@@ -28,7 +39,7 @@
 
         <!-- show question -->
         <div class="panel-body" >
-        	<pre style="border:0px; background-color:rgba(255, 255, 255, 0); padding:5px; margin:0px; font-size:80px; font-weight:900;">{{showQuestion[questionNumber].questionText}}</pre>
+        	<pre style="border:0px; background-color:rgba(255, 255, 255, 0); padding:5px; margin:0px; font-size:80px; font-weight:900; color:white;">{{showQuestion[questionNumber].questionText}}</pre>
         </div>
     
     </div>

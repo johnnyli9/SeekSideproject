@@ -147,7 +147,8 @@ module.exports = NoGapDef.component({
 
                 // register page
                 Instance.UIMgr.registerPage(this, 'Admin', this.assets.template, {
-                    iconClasses: 'fa fa-gavel'
+                    iconClasses: 'fa fa-gavel',
+                    right: 3,
                 });
             },
 

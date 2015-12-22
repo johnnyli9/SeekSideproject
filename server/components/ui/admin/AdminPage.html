@@ -1,7 +1,18 @@
+<img style="position:fixed; left:0%; top:0%; display:block;
+    min-height:100%;
+    min-width:100%; z-index:-1000;
+    -webkit-filter: blur(7px); 
+    -moz-filter: blur(8px);
+    -ms-filter: blur(8px);    
+    filter: blur(8px);"
+    src='/pub/img/background4.jpg'/>
+
+<h1 class="" style="color:white; font-size:24px; position:fixed;  font-weight:600; top:-12px; left:15px;">SeekSide</h1>
+
 <div class="fill container-page" ng-controller="adminCtrl">
     <!-- ######################################################################################################################## -->
     <!-- User list -->
-
+    <br/><br/>
     <div class="alert alert-danger"
         ng-if="!!errorMessage">
         <span>{{errorMessage}}</span>
@@ -14,21 +25,29 @@
 
     <div ng-controller="adminUsersCtrl"
         class="panel panel-primary"
-        ng-init="UsersView.showPanel = true;">
-        <div class="panel-heading">
-            <div class="panel-title"
-                ng-click="PC.toggleUserPanel();">
+        ng-init="UsersView.showPanel = true;" style="background-color:rgba(0, 0, 0, 0); border-color:#1CDED5;">
+        <div class="panel-heading" style="border:#1CDED5;">
+            <!-- <div class="panel-title"
+                ng-click="PC.toggleUserPanel();" style="background-color:#1CDED5; font-size:25px; font-weight:500;">
                 <span class="">Users <span style="color: #DDDDDD"> ({{UsersView.users.list.length || 0}})</span></span>
 
             	<span class="pull-right">
-            		<span ng-show="UsersView.loading"><i class="fa fa-spinner fa-spin"></i></span>
+            		
+                    ▽ span 這段原本是註解
+                    <span ng-show="UsersView.loading"><i class="fa fa-spinner fa-spin"></i></span>
+                    
 	                <a href="" class="btn btn-sm">
-	                    <!-- <i class="fa fa-edit" style="margin-bottom: -1em;"></i> -->
+	                    <i class="fa fa-edit" style="margin-bottom: -1em;"></i>
 	                    <span ng-show="!UsersView.showPanel">Show</span>
 	                    <span ng-show="UsersView.showPanel">Hide</span>
 	                </a>
                 </span>
+            </div> -->
+
+            <div class="panel-title" style="background-color:#1CDED5; font-size:25px; font-weight:500;">
+                <span class="">Users <span style="color: #DDDDDD"> ({{UsersView.users.list.length || 0}})</span></span>
             </div>
+
         </div>
         <div class="panel-body no-padding"
              collapse="!UsersView.showPanel"
@@ -36,13 +55,13 @@
             <table class="table">
                 <thead style="cursor:pointer">
                     <th class="col-xs-8"
-                        ng-click="PC.changeSortBy('name')">
+                        ng-click="PC.changeSortBy('name')" style="color:white; font-size:20px;">
                         name 
                         <i ng-if="UsersView.orderByName === 'name' && UsersView.orderReversed" class="fa fa-caret-down"></i>
                         <i ng-if="UsersView.orderByName === 'name' && !UsersView.orderReversed" class="fa fa-caret-up"></i>
                     </th>
                     <th class="col-xs-2"
-                        ng-click="PC.changeSortBy('role')">
+                        ng-click="PC.changeSortBy('role')" style="color:white; font-size:20px;">
                         role
                         <i ng-if="UsersView.orderByName === 'role' && UsersView.orderReversed" class="fa fa-caret-down"></i>
                         <i ng-if="UsersView.orderByName === 'role' && !UsersView.orderReversed" class="fa fa-caret-up"></i>
@@ -57,14 +76,14 @@
                         <td class="col-xs-8"
                             ng-class="{ 'text-bold': user.role > UserRole.StandardUser, darkdarkgrey: user.role > UserRole.StandardUser }"
                             style="vertical-align: middle;">
-                            <span>
+                            <span style="color:white; font-size:20px;">
                                 {{user.userName}}
                             </span>
                         </td>
 
                         <td class="col-xs-4"
                             style="vertical-align: middle;">
-                            <span>
+                            <span style="color:white; font-size:20px;">
                                 {{userRoleToString(user.role)}} &nbsp;
                             </span>
                         </td>
@@ -119,15 +138,17 @@
 
             <div class="some-padding">
                 <!-- Add user button -->
-                <input type="text" ng-model="UsersView.newUserEmail" placeholder="new user email">
+                <input type="text" ng-model="UsersView.newUserEmail" placeholder="new user email" class="form-control" style="width:400px; float:left"/>
                 <a class="btn btn-lg btn-fancy"
-                    style="margin-top: .5em; margin-bottom: .5em;"
+                    style="margin-top:0px; margin-bottom:0px; background-color:#1CDED5; border:#1CDED5; float:left; position:relative; left:10px; height:35px; bottom:1px;"
                     ng-disabled="UsersView.busy || !UsersView.newUserEmail || !UsersView.newUserEmail.length"
                     ng-click="PC.createNewAccount()">
-                    <i class="fa fa-plus"></i> &nbsp;
-                    <span>Add new user!</span> &nbsp;
+                    <i class="fa fa-plus" style="position:relative; bottom:3px;"></i> &nbsp;
+                    <span style="position:relative; bottom:3px;">Add new user!</span> &nbsp;
                     <span ng-show="UsersView.busy"><i class="fa fa-spinner fa-spin"></i></span>
                 </a>
             </div>
+
         </div>
+        <br/>
     </div>  <!-- users -->

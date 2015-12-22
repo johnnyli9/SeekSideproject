@@ -1,8 +1,31 @@
+<img style="position:fixed; left:0%; top:0%; display:block;
+    min-height:100%;
+    min-width:100%; z-index:-1000;
+    -webkit-filter: blur(7px); 
+    -moz-filter: blur(8px);
+    -ms-filter: blur(8px);    
+    filter: blur(8px);
+    "src='/pub/img/background3.jpg'/>
+
+<h1 class="" style="color:white; font-size:40px; position:fixed;  font-weight:600; top:-15px; left:20px;">SeekSide</h1>
+
 <div class="fullscreen_bg" ng-controller="guestCtrl">
 
-    <div class="container container-page form-signin some-padding">
-        <h1 class="form-signin-heading">People Counter!</h1>
-            
+    <p style="position:absolute; top:200px; color:white; font-size:50px; font-weight:600;"> 
+        &nbsp;命中註定的默契
+    </p>
+    <p style="position:absolute; top:255px; color:white; font-size:70px; font-weight:600; "> 
+        馬上認識他/她
+    </p>
+    <p style="position:absolute; top:350px; color:white; font-size:25px; font-weight:600; "> 
+        &nbsp;&nbsp;聯誼主持的得力夥伴
+    </p>
+    <p style="position:absolute; top:385px; color:white; font-size:25px; font-weight:600; "> 
+        &nbsp;&nbsp;約會交友的最佳幫手
+    </p>
+
+    <div style="position:absolute; top:400px;" class="container container-page form-signin some-padding">
+
         <!-- Login locked -->
         <div ng-if="isLoginLocked || !!errorMessage"
             style="margin-bottom: 2em;"
@@ -13,7 +36,7 @@
         </div>
 
         <!-- Facebook login button -->
-        <a ng-disabled="busy" tabindex="3" class="container-stretched form-control btn btn-lg btn-primary btn-block" 
+        <!-- <a ng-disabled="busy" tabindex="3" class="container-stretched form-control btn btn-lg btn-primary btn-block" 
             style="margin-bottom: 3em;"
             href="/auth/facebook"
             ng-click="clickFacebookLogin()">
@@ -22,16 +45,17 @@
                 <i class="fa fa-thumbs-o-up"></i>    
             </span>
             <span ng-show="busy"><i class="fa fa-spinner fa-spin"></i></span>
-        </a>
+        </a> -->
 
         <!-- Dev login form -->
         <div ng-if="showDevLoginForm">
-            <hr />
+            <!-- <hr /> -->
 
             <!-- User name input -->
             <validated-text-input tabindex="1"
+                style="height:40px;"
                 class="container-stretched form-control form-input" 
-                placeholder="{{localize('userName')}}" required autofocus
+                placeholder="帳號" required autofocus
                 validate-model="loginData.userName"
                 validate-error="nameInvalid"
                 validate-result-invalid="true"
@@ -41,28 +65,30 @@
 
             <!-- Passphrase input -->
             <input type="password" tabindex="2"
+                style="height:40px;"
                 ng-model="loginData.passphrase" 
                 class="container-stretched form-control form-input"
-                placeholder="pass phrase"/>
+                placeholder="密碼"/>
 
             <div class="vertical-space"></div>
 
             <!-- Error Messages -->
-            <div ng-style="{visibility: nameInvalid && 'visible' || 'hidden'}"
+            <!-- <div ng-style="{visibility: nameInvalid && 'visible' || 'hidden'}"
                 class="container-stretched alert alert-danger no-padding"
                 style="margin-bottom: 20px">
                 <localize
                     ng-show="nameInvalid"
                     key="error.invalid.userName"></localize>
                 &nbsp;
-            </div>
+            </div> -->
 
             <!-- Login button -->
             <a ng-disabled="busy || nameInvalid" tabindex="3"
-                class="container-stretched form-control btn btn-lg btn-fancy btn-block" 
+                style="height:40px; height:70px; position:relative; top:10px; background-color:#1CDED5; border-color:#1CDED5;"
+                class="form-control btn btn-lg btn-fancy btn-block" 
                 ng-click="clickLogin()"
                 ng-enter="clickLogin()">
-                <span>Login</span>
+                <span style="font-size:35px; font-weight:600;">&nbsp;&nbsp;&nbsp;立即遇見</span>
                 <span ng-style="{visibility: busy && 'visible' || 'hidden'}"><i class="fa fa-spinner fa-spin"></i></span>
             </a>
         </div>

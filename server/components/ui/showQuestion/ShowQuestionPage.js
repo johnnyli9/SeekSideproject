@@ -71,7 +71,7 @@ module.exports = NoGapDef.component({
              */
             setupUI: function(UIMgr, app) {
                 // create Home controller
-                app.lazyController('homeCtrl', function($scope) {
+                app.lazyController('showQuestionCtrl', function($scope) {
                     UIMgr.registerPageScope(ThisComponent, $scope);
                     
                     // customize your HomePage's $scope here:

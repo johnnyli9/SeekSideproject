@@ -551,7 +551,8 @@ module.exports = NoGapDef.component({
 
                 // register page
                 Instance.UIMgr.registerPage(this, 'Question', this.assets.template, {
-                    iconClasses: 'fa fa-question'
+                    iconClasses: 'fa fa-question',
+                    right: 1,
                 });
             },
 

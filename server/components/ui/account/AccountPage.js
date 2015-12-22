@@ -170,7 +170,7 @@ module.exports = NoGapDef.component({
                 // register page
                 Instance.UIMgr.registerPage(this, 'Account', this.assets.template, {
                     iconClasses: 'fa fa-user',
-                    right: 3,
+                    right: 4,
                     getText: function() {
                         var user = Instance.User.currentUser;
 

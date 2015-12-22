@@ -71,11 +71,11 @@ module.exports = {
     // 'externalHost': '192.168.11.11',
 
     // 'hosts': ['192.168.11.11'],
-    // 'externalHost': 'localhost',
-    // 'hosts': ['localhost'],
+    'externalHost': 'localhost',
+    'hosts': ['localhost'],
 
-    'externalHost': '10.0.1.26',
-    'hosts': ['10.0.1.26'],
+    // 'externalHost': '10.0.1.26',
+    // 'hosts': ['10.0.1.26'],
 
 
 
