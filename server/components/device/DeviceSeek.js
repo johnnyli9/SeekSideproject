@@ -155,9 +155,9 @@ module.exports = NoGapDef.component({
                 soundPin6.dir(mraa.DIR_OUT);
 
                 // led initial
-                ledRedPin = new mraa.Gpio(2); //setup access digital input pin 6 (Pwm)
+                ledRedPin = new mraa.Gpio(12); //setup access digital input pin 6 (Pwm)
                 ledRedPin.dir(mraa.DIR_OUT);
-                ledYellowPin = new mraa.Gpio(3); //setup access digital input pin 6 (Pwm)
+                ledYellowPin = new mraa.Gpio(7); //setup access digital input pin 6 (Pwm)
                 ledYellowPin.dir(mraa.DIR_OUT);
                 ledGreenPin = new mraa.Gpio(4); //setup access digital input pin 6 (Pwm)
                 ledGreenPin.dir(mraa.DIR_OUT);
@@ -171,8 +171,8 @@ module.exports = NoGapDef.component({
                 // this.playSound();
                 //this.detectRotary();
 
-                led13 = new mraa.Gpio(13);
-                led13.dir(mraa.DIR_OUT);
+                // led13 = new mraa.Gpio(13);
+                // led13.dir(mraa.DIR_OUT);
                 
                 // this.blinkLed();
 
@@ -317,7 +317,97 @@ module.exports = NoGapDef.component({
             nfcDetect: function() {
                 // nfc mode read other deviceId
                 // if detect call server to test alike
+
+
                 console.log("enter nfcDetect");
+
+                // Load PN532 module
+                var pn532 = require('jsupm_pn532');
+
+                // Instantiate an PN532 on I2C bus 0 (default) using gpio 3 for the
+                // IRQ, and gpio 2 for the reset pin.
+                var myNFCObj = new pn532.PN532(3, 2);
+
+                if (!myNFCObj.init())
+                    console.log("init() failed");
+
+                var vers = myNFCObj.getFirmwareVersion();
+
+                if (vers)
+                    console.log("Got firmware version: " + toHex(vers, 8));
+                else
+                {
+                    console.log("Could not identify PN532");
+                    exit();
+                }
+
+                // Now scan and identify any cards that come in range (1 for now)
+
+                // Retry forever
+                myNFCObj.setPassiveActivationRetries(0xff);
+
+                myNFCObj.SAMConfig();
+
+                var uidSize = new pn532.uint8Array(0);
+                var uid = new pn532.uint8Array(7);
+
+                var myInterval = setInterval(function()
+                {
+                    for (var x = 0; x < 7; x++)
+                        uid.setitem(x, 0);
+                    if (myNFCObj.readPassiveTargetID(pn532.PN532.BAUD_MIFARE_ISO14443A,
+                                                 uid, uidSize, 2000))
+                    {
+                        // found a card
+                        console.log("Found a card: UID len " + uidSize.getitem(0));
+                        process.stdout.write("UID: ");
+                        for (var i = 0; i < uidSize.getitem(0); i++)
+                                {
+                                        var byteVal = uid.getitem(i);
+                            process.stdout.write(toHex(byteVal, 2) + " ");
+                                }
+                        process.stdout.write("\n");
+                        console.log("SAK: " + toHex(myNFCObj.getSAK(), 2));
+                        console.log("ATQA: " + toHex(myNFCObj.getATQA(), 4));
+                        console.log(" ");
+                        // ThisComponent.ttt();
+                        clearInterval(myInterval);
+                        ThisComponent.ttt();
+                    }
+                    else
+                        console.log("Waiting for a card...");
+                }, 1000);
+
+                // ThisComponent.ttt();
+
+                function toHex(d, pad)
+                {
+                    // pad should be between 1 and 8
+                    return  ("00000000"+(Number(d).toString(16))).slice(-pad)
+                }
+
+                function exit()
+                {
+                    clearInterval(myInterval);
+                    myNFCObj = null;
+                    pn532.cleanUp();
+                    pn532 = null;
+                    console.log("Exiting");
+                    process.exit(0);
+                }
+
+                // When exiting: clear interval, and print message
+                process.on('SIGINT', function()
+                {
+                    exit();
+                });
+                
+                // var targetDeviceId = 5;
+                // this.host.checkAlike(targetDeviceId, localDeviceId, localActivityId);
+            },
+
+            ttt: function(){
+                console.log("ddd");
                 var targetDeviceId = 5;
                 this.host.checkAlike(targetDeviceId, localDeviceId, localActivityId);
             },
@@ -356,6 +446,7 @@ module.exports = NoGapDef.component({
                                 this.redefinState = setTimeout(this.defineState.bind(this), 500);
                             }else if(defineStateCount2 >= 18){
                                 console.log("back to nfcdetect mode");
+                                this.nfcDetect();
                             }
                     
                 }
@@ -423,6 +514,24 @@ module.exports = NoGapDef.component({
                 },
                 backToNfc: function(){
                     this.nfcDetect();
+                },
+
+                matchDone: function() {
+
+                        ledRedPin.write(1);                  
+                        ledYellowPin.write(1);
+                        ledGreenPin.write(1);
+                        ledBluePin.write(1);
+                        
+                        Promise.delay(10000)
+                        .then(function() {
+                            ledRedPin.write(0);                  
+                            ledYellowPin.write(0);
+                            ledGreenPin.write(0);
+                            ledBluePin.write(0);
+                        
+                        });
+                    
                 },
 
                 receiver: function(myselfId, callById, activityId) {

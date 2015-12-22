@@ -160,7 +160,8 @@ module.exports = NoGapDef.component({
                 compareTwoDevice: function(targetDeviceId, selfDeviceId, activityId) {
                     
                     this.results.readObjects();
-                    
+                    console.log("enter cpmpareTwoDevice");
+
                     Promise.delay(100).bind(this).then(function(){
 
                         var result = 0;
