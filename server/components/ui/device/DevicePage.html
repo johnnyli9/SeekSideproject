@@ -54,21 +54,21 @@
                     code="user = device.getUserNow();
                             lastActiveTime = PC.deviceLastActiveTimes[device.deviceId]"
                     class="list-group-item no-padding"
-                    ng-class="{ 'highlight-own': PC.deviceSelection.isSelected(device) }">
+                    ng-class="{ 'highlight-own': PC.deviceSelection.isSelected(device) }" style="background-color:rgba(0, 0, 0, 0); border:rgba(0, 0, 0, 0);">
 
                     <div class="table some-padding"
                         ng-click="PC.deviceSelection.toggleSelection(device); onChange(); PC.showDeviceConfig = false;">
                         <div class="row">
                             <div class="col-xs-3">
-                                <span>{{ user.userName }}</span>
+                                <span style="color:white;">{{ user.userName }}</span>
                             </div>
                             <div class="col-xs-9">
                                 <span ng-if="device.isAssigned">
                                     <!-- if assigned, display last active time -->
-                                    <span ng-if="!!lastActiveTime">
+                                    <span ng-if="!!lastActiveTime" style="color:white;">
                                         {{ util.moment(lastActiveTime).fromNow() }}
                                     </span>
-                                    <span ng-if="!lastActiveTime" class="alert-warning">
+                                    <span ng-if="!lastActiveTime" style="color:white;">
                                         &lt;unknown>
                                     </span>
                                 </span>
