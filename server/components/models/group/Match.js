@@ -131,13 +131,23 @@ module.exports = NoGapDef.component({
                         console.log(obj.groupId);
                         console.log(obj.member);
                         this.matches.createObject(obj, "true");
+                        Shared.DeviceStatus.runForDevice(myselfId, function(Instance) {
+                            Instance.DeviceSeek.client.matchDone();
+                            //  多少時間經過後沒有反應則重新回到nfc mode                     
+
+                        });
+                        Shared.DeviceStatus.runForDevice(callById, function(Instance) {
+                            Instance.DeviceSeek.client.matchDone();
+                            //  配對成功的反應                    
+
+                        });
                     }
                     else{
                         Shared.DeviceStatus.runForDevice(callById, function(Instance) {
                             Instance.DeviceSeek.client.backToNfc();
                             //  多少時間經過後沒有反應則重新回到nfc mode                     
 
-                    });
+                        });
                     }
                 }
             }

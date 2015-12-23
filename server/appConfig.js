@@ -68,11 +68,11 @@ module.exports = {
      * Host name or IP that external clients can connect to
      */
 
-    // 'externalHost': '192.168.11.11',
+    'externalHost': '192.168.11.11',
 
-    // 'hosts': ['192.168.11.11'],
-    'externalHost': 'localhost',
-    'hosts': ['localhost'],
+    'hosts': ['192.168.11.11'],
+    // 'externalHost': 'localhost',
+    // 'hosts': ['localhost'],
 
     // 'externalHost': '10.0.1.26',
     // 'hosts': ['10.0.1.26'],
