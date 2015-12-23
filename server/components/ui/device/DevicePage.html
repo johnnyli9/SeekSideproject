@@ -201,8 +201,8 @@
                 </li>       <!-- ng-repeat="device" -->
             </ul>
 
-            <div class="alert alert-info" ng-if="!PC.busy && deviceCache.list.length == 0">
-                <span>There are no registered devices yet...</span>
+            <div class="alert" ng-if="!PC.busy && deviceCache.list.length == 0">
+                <span style="color:white;">There are no registered devices yet...</span>
             </div>
 
             <!-- Device buttons -->
@@ -213,23 +213,26 @@
                     <div style="margin:auto; position:relative;">
                         <a class="btn btn-default" href=""
                             ng-if="currentUserIsStaff"
-                            ng-click="registerNewDevice('new device')">
-                            <i class="fa fa-plus"></i>&nbsp; Add Device!
+                            ng-click="registerNewDevice('new device')"
+                            style="background-color:#1CDED5; border:#1CDED5; color:white;">
+                            <i class="fa fa-plus" style="color:white;"></i>&nbsp; Add Device!
                         </a>
 
                         <a class="btn btn-default" href=""
                             ng-if="currentUserIsStaff"
                             ng-click="startWritingDeviceWifiConfigFile()"
-                            ng-class="{active: PC.writingDeviceWifiConfigFile}">
-                            <i class="fa fa-edit"></i>&nbsp; Edit Wi-fi configuration file
+                            ng-class="{active: PC.writingDeviceWifiConfigFile}"
+                            style="background-color:#1CDED5; border:#1CDED5; color:white;">
+                            <i class="fa fa-edit" style="color:white;"></i>&nbsp; Edit Wi-fi configuration file
                         </a>
 
                         <span dropdown class="no-padding" style="position:relative;">
                             <a href=""
                               type="button"
                               class="btn btn-default dropdown-toggle"
-                              title="More">
-                              <i class="fa fa-navicon"></i>
+                              title="More"
+                              style="background-color:#1CDED5; border:#1CDED5;">
+                              <i class="fa fa-navicon" style="color:white;"></i>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">

@@ -83,12 +83,19 @@ module.exports = NoGapDef.component({
                     $scope.questionAmount;
                     // $scope.showQuestion; // show question to user
 
+                    $scope.showQuestion = new Array(0);
+
                     $scope.changeActivity = function(){
                         // choose activity
                         console.log($scope.activitySelect);
-                        $scope.showQuestion = Instance.ActivityQuestion.activityQuestions.indices.byActivityId.get($scope.activitySelect);
+
+                        $scope.showQuestion[0] = Instance.ActivityQuestion.activityQuestions.indices.byActivityIdAndQNumber.get($scope.activitySelect,1);
+                        $scope.showQuestion[1] = Instance.ActivityQuestion.activityQuestions.indices.byActivityIdAndQNumber.get($scope.activitySelect,2);
+                        $scope.showQuestion[2] = Instance.ActivityQuestion.activityQuestions.indices.byActivityIdAndQNumber.get($scope.activitySelect,3);
+                        $scope.showQuestion[3] = Instance.ActivityQuestion.activityQuestions.indices.byActivityIdAndQNumber.get($scope.activitySelect,4);
+                        $scope.showQuestion[4] = Instance.ActivityQuestion.activityQuestions.indices.byActivityIdAndQNumber.get($scope.activitySelect,5);
                         
-                        console.log($scope.showQuestion.length);
+                        // console.log($scope.showQuestion.length);
                         $scope.questionNumber = 0;
                     };
 
